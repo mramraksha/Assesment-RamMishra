@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyHomeDoor.Core.Repository.Common
+namespace Assessment_RaceTrack.Core.Repository.Common
 {
     public interface IRepository<T> where T:class
     {
@@ -17,7 +17,7 @@ namespace MyHomeDoor.Core.Repository.Common
              string includeProperties = "");
         Task<T> GetByID(object id);
 
-        Task Insert(T entity);
+        T Insert(T entity);
         Task Update(T entityToUpdate);
     }
 }

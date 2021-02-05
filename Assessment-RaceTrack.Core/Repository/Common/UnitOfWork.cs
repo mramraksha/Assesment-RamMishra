@@ -1,18 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
-using MyHomeDoor.Core.Data;
-using MyHomeDoor.Core.Data.Models;
+﻿using Assessment_RaceTrack.Data;
 
-namespace MyHomeDoor.Core.Repository.Common
+namespace Assessment_RaceTrack.Core.Repository.Common
 {
     public class UnitOfWork : IUnitOfWork
     {
-        //public readonly DbContextOptions dbContext;
-        public UnitOfWork(MyDoorStepDBContext _dbContext)
+        public UnitOfWork(RaceTrackContext _dbContext)
         {
             this.DBContext = _dbContext;
         }
 
-        public MyDoorStepDBContext DBContext { get; }
+        public RaceTrackContext DBContext { get; }
 
         public void Commit()
         {
@@ -20,24 +17,4 @@ namespace MyHomeDoor.Core.Repository.Common
         }
     }
 
-       
-
-        //public void Commit()
-        //{
-        //    throw new System.NotImplementedException();
-        //}
-
-        //public UnitOfWork(MyDoorStepDBContext dbContext)
-        //{
-        //    this.dbContext = dbContext;
-        //}
-
-        //private BaseRepository<Users> _users;
-        //public IRepository<Users> Users => _users ?? (_users = new BaseRepository<Users>(this.dbContext));
-
-
-        //public void Commit()
-        //{
-        //    dbContext.SaveChanges();
-        //}
-    }
+}

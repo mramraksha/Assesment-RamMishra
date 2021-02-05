@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using MyHomeDoor.Core.Data;
+﻿using Assessment_RaceTrack.Data;
+using System.Data.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,15 +7,16 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyHomeDoor.Core.Repository.Common
+namespace  Assessment_RaceTrack.Core.Repository.Common
 {
     public class BaseRepository<T> : IRepository<T> where T : class
     {
-        
+        public RaceTrackContext context;
+        public DbSet<T> dbSet;
         public BaseRepository(IUnitOfWork iUnitOfWork)
         {
-           // this.context = iUnitOfWork.DBContext;            
-            //this.dbSet = context.Set<T>();
+            this.context = iUnitOfWork.DBContext;
+            this.dbSet = context.Set<T>();
         }
 
         public virtual IEnumerable<T> Get(
@@ -55,9 +56,9 @@ namespace MyHomeDoor.Core.Repository.Common
             return await dbSet.FindAsync(id);
         }
 
-        public virtual async Task Insert(T entity)
+        public virtual T Insert(T entity)
         {
-            await dbSet.AddAsync(entity);
+            return dbSet.Add(entity);
         }
 
         public virtual async Task Delete(object id)

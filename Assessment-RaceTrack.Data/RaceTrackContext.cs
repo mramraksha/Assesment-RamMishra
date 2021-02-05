@@ -1,0 +1,19 @@
+﻿using Assessment_RaceTrack.Models;
+using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
+
+namespace Assessment_RaceTrack.Data
+{
+    public class RaceTrackContext : DbContext
+    {
+        public RaceTrackContext() : base("RaceTrackContext")
+        { }
+        public DbSet<Vehicle> Vehicles { get; set; }
+        public DbSet<Track> Tracks { get; set; }
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+        }
+    }
+    
+}

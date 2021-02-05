@@ -1,15 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using MyHomeDoor.Core.Data;
-using MyHomeDoor.Core.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Assessment_RaceTrack.Data;
 
-namespace MyHomeDoor.Core.Repository.Common
+namespace Assessment_RaceTrack.Core.Repository.Common
 {
     public interface IUnitOfWork
     {
-        MyDoorStepDBContext DBContext { get; }
+        RaceTrackContext DBContext { get; }
 
         void Commit();
     }
