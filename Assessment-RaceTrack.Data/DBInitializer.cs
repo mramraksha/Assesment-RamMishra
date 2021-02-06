@@ -20,7 +20,8 @@ namespace Assessment_RaceTrack.Data
                     Lift = 5,
                     Image= "v1.PNG",
                     IsActive=true,
-                    CreatedDate=DateTime.Now
+                    CreatedDate=DateTime.Now,
+                    OnTrack=true
                 },
                  new Vehicle()
                 {
@@ -31,7 +32,8 @@ namespace Assessment_RaceTrack.Data
                     Lift = 5,
                     Image= "v1.PNG",
                     IsActive=true,
-                    CreatedDate=DateTime.Now
+                    CreatedDate=DateTime.Now,
+                     OnTrack=true
                 },
                   new Vehicle()
                 {
@@ -42,7 +44,8 @@ namespace Assessment_RaceTrack.Data
                     Lift = 5,
                     Image= "v1.PNG",
                     IsActive=true,
-                    CreatedDate=DateTime.Now
+                    CreatedDate=DateTime.Now,
+                     OnTrack=true
                 },
                    new Vehicle()
                 {
@@ -53,7 +56,8 @@ namespace Assessment_RaceTrack.Data
                     Lift = 5,
                     Image= "v1.PNG",
                     IsActive=true,
-                    CreatedDate=DateTime.Now
+                    CreatedDate=DateTime.Now,
+                     OnTrack=true
                 },
                     new Vehicle()
                 {
@@ -64,26 +68,12 @@ namespace Assessment_RaceTrack.Data
                     Lift = 5,
                     Image= "v1.PNG",
                     IsActive=true,
-                    CreatedDate=DateTime.Now
+                    CreatedDate=DateTime.Now,
+                     OnTrack=true
                 },
             };
-            int vehicleCount = 0;
-            vehicles.ForEach(vehicle => AddVehilceDetails(vehicle));
-            //Add vehicle and track details
-            void AddVehilceDetails(Vehicle vehicle)
-            {
-                vehicleCount++;
-                context.Vehicles.Add(vehicle);
-                context.Tracks.Add(new Track()
-                {
-                    Id = Guid.NewGuid(),
-                    VehileId = vehicle.Id,
-                    Name = "TrackA",
-                    DateTimestamp = DateTime.Now,
-                    //if vehicleCount>5 vehicle will not allow on track
-                    OnTrack = (vehicleCount==5)?true:false
-                }) ;
-            };
+            vehicles.ForEach(vehicle => context.Vehicles.Add(vehicle));
+           
             base.Seed(context);
            // context.SaveChanges();
         }

@@ -58,13 +58,16 @@ namespace  Assessment_RaceTrack.Core.Repository.Common
 
         public virtual T Insert(T entity)
         {
-            return dbSet.Add(entity);
+            var res= dbSet.Add(entity);
+            this.context.SaveChanges();
+            return res;
         }
 
         public virtual async Task Delete(object id)
         {
             T entityToDelete = await dbSet.FindAsync(id);
             await Delete(entityToDelete);
+            this.context.SaveChanges();
         }
 
         public virtual async Task Delete(T entityToDelete)
@@ -80,6 +83,7 @@ namespace  Assessment_RaceTrack.Core.Repository.Common
         {
             dbSet.Attach(entityToUpdate);
             context.Entry(entityToUpdate).State = EntityState.Modified;
+            this.context.SaveChanges();
         }
     }
 }

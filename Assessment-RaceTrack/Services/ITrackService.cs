@@ -9,6 +9,7 @@ namespace Assessment_RaceTrack.Services
     public interface ITrackService
     {
         IEnumerable<Vehicle> GetVehiclesOnTrack();
-        int AddVehiclesOnTrack(Vehicle vehicle);
+        Response AddVehiclesOnTrack(VehicleDto vehicle);
+        Response RemoveVehiclesFromTrack(Guid vehicleId);
     }
 }

@@ -1,29 +1,53 @@
 ﻿using Assessment_RaceTrack.Core.Repository;
+using Assessment_RaceTrack.Models;
+using Assessment_RaceTrack.Services;
+using System;
+using System.IO;
 using System.Web.Mvc;
 
 namespace Assessment_RaceTrack.Controllers
 {
     public class VehicleController : Controller
     {
-        private readonly IVehicleRepository vehicleRepository;
+        private readonly ITrackService _trackService;
 
-        public VehicleController(IVehicleRepository _vehicleRepository)
+        public VehicleController(ITrackService trackService)
         {
-            vehicleRepository = _vehicleRepository;
+            _trackService = trackService;
         }
 
+        [HttpGet]
         public ActionResult Create()
         {
-            var result = vehicleRepository.Get();
-
 
             return View();
         }
-        public ActionResult List()
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(VehicleDto vehicleDto)
         {
-            var result = vehicleRepository.Get();
+            if (ModelState.IsValid)
+            {
+                //Process image file
+                var image = vehicleDto.ImageFile;
+                string fileName = string.Empty;
+                string folderPath = string.Empty;
 
+                if (image?.ContentLength > 0)
+                {
+                    //To Get File Extension  
+                    string fileExtension = Path.GetExtension(image.FileName);
 
+                    //Add Current Date To Attached File Name  
+                     fileName = DateTime.Now.ToString("yyyyMMdd")+ fileExtension;
+                     folderPath = Path.Combine(Server.MapPath("~/Content/images/"), fileName);
+                    image.SaveAs(folderPath);
+                    vehicleDto.Image = fileName;
+                    _trackService.AddVehiclesOnTrack(vehicleDto);
+                }
+            }
+           
             return View();
         }
     }

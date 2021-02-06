@@ -2,43 +2,30 @@
 
 @{ ViewBag.Title = "Race Track";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    int rowCount = 0; }
+    int rowCount = 0;
+    int totalAllowedVehicle = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["TotalAllowedVehicleOnTrack"]);
+    bool activeAdd = Model.Count() < totalAllowedVehicle; }
 
-<div>
+<script type="text/javascript">
+    $(document).ready(function () {
 
-    <div>
-        <p class="warning alert-info alert">
-           Only 5 vehicle will allow on track 
-        </p>
-    </div>
-    <div class="text-right btn btn-default">
-        @Html.ActionLink("Add new vehicle on track", "Create", "Vehicle")
-    </div>
+        $.ajax({
+            url: '/Track/GetVehicle',
+            contentType: 'application/html; charset=utf-8',
+            type: 'GET',
+            dataType: 'html'
+        })
+            .success(function (result) {
+                $('#dvUserdetails').html(result);
+            })
+            .error(function (xhr, status) {
+                alert(status);
+            })
+    });
+</script>
+
+wfdfsdfsfsdf
+
+<div id="dvUserdetails" style="width: 50%%; height: 130px; display:none">
+   
 </div>
-<table id="DataTable" style="width:100%;" class="table table-bordered">
-    <thead>
-        <tr>
-            <th>#</th>
-            <th>Vehichle Name</th>
-            <th>Vehicle Image</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-  
-    <tbody>
-        @foreach (var item in Model)
-        {
-<tr>
-    <td>  @{rowCount++;}@rowCount </td>
-    <td>@item.Name</td>
-    <td>
-        <img src="/Content/images/@Url.Content(item.Image)" alt="Image" height="100px" width="100px" />
-    </td>
-
-
-    <td>
-        <a href="../RaceTrack/RemoveVehicleFromTrack/@item.Id.ToString()">Remove</a>
-    </td>
-</tr>}
-    </tbody>
-</table>

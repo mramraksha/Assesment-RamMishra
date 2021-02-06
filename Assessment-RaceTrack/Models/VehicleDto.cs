@@ -6,18 +6,8 @@ using System.Web;
 
 namespace Assessment_RaceTrack.Models
 {
-    public class VehicleDto
+    public class VehicleDto:Vehicle
     {
-        public VehicleType Type { get; set; }
-        public string Name { get; set; }
-        public bool HandBreak { get; set; }
-        public bool TowStrap { get; set; }
-
-        [Range(0, 5)]
-        public int Lift { get; set; }
-        public string Image { get; set; }
-        public int? TireWear { get; set; }
-
-        public bool AddOnTrack { get; set; }
+        public HttpPostedFileBase ImageFile { get; set; }
     }
 }

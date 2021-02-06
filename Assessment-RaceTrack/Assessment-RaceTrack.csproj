@@ -193,6 +193,7 @@
     <Content Include="Views\Vehicle\Create.cshtml" />
     <Content Include="Views\Vehicle\List.cshtml" />
     <Content Include="Views\Track\Index.cshtml" />
+    <Content Include="Views\Shared\_Vehicles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

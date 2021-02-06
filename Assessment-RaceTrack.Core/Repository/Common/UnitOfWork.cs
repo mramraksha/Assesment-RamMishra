@@ -13,7 +13,7 @@ namespace Assessment_RaceTrack.Core.Repository.Common
 
         public void Commit()
         {
-            throw new System.NotImplementedException();
+            DBContext.SaveChanges();
         }
     }
 

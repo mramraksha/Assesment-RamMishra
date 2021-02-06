@@ -14,7 +14,13 @@ namespace Assessment_RaceTrack.Controllers
         // GET: Track
         public ActionResult Index()
         {
-            return View(_trackService.GetVehiclesOnTrack());
+            //~/Views/Shared/_Vehicles
+            return View();
+        }
+        public PartialViewResult GetVehicle()
+        {
+            //~/Views/Shared/_Vehicles
+            return PartialView("_Vehicles",_trackService.GetVehiclesOnTrack());
         }
     }
 }
