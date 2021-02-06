@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Assessment_RaceTrack.Models
 {
 
-    public enum Type
+    public enum VehicleType
     {
         Truck, Car
     }
@@ -14,8 +14,8 @@ namespace Assessment_RaceTrack.Models
         
         [Required]
         public Guid Id { get; set; }
-        public Type Type { get; set; }
-        public string Description { get; set; }      
+        public VehicleType Type { get; set; }
+        public string Name { get; set; }      
         public bool HandBreak { get; set; }
         public bool TowStrap { get; set; }
 

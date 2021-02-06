@@ -6,7 +6,7 @@ namespace Assessment_RaceTrack.Data
 {
     public class RaceTrackContext : DbContext
     {
-        public RaceTrackContext() : base("RaceTrackContext")
+        public RaceTrackContext() : base("RaceTrackConString")
         { }
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<Track> Tracks { get; set; }

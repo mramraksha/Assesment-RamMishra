@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Assessment_RaceTrack.Data
 {
-    public class DBInitializer : System.Data.Entity.DropCreateDatabaseIfModelChanges<RaceTrackContext>
+    public class DBInitializer : System.Data.Entity.DropCreateDatabaseAlways<RaceTrackContext>
     {
         protected override void Seed(RaceTrackContext context)
         {
@@ -14,7 +14,7 @@ namespace Assessment_RaceTrack.Data
                 new Vehicle()
                 {
                     Id = Guid.NewGuid(),
-                    Description = "This is 1St vehicle on race track",
+                    Name = "This is 1St vehicle on race track",
                     HandBreak = true,
                     TowStrap = true,
                     Lift = 5,
@@ -25,7 +25,7 @@ namespace Assessment_RaceTrack.Data
                  new Vehicle()
                 {
                     Id = Guid.NewGuid(),
-                    Description = "This is 2nd vehicle on race track",
+                    Name = "This is 2nd vehicle on race track",
                     HandBreak = true,
                     TowStrap = true,
                     Lift = 5,
@@ -36,7 +36,7 @@ namespace Assessment_RaceTrack.Data
                   new Vehicle()
                 {
                     Id = Guid.NewGuid(),
-                    Description = "This is 3rd vehicle on race track",
+                    Name = "This is 3rd vehicle on race track",
                     HandBreak = true,
                     TowStrap = true,
                     Lift = 5,
@@ -47,7 +47,7 @@ namespace Assessment_RaceTrack.Data
                    new Vehicle()
                 {
                     Id = Guid.NewGuid(),
-                    Description = "This is 4th vehicle on race track",
+                    Name = "This is 4th vehicle on race track",
                     HandBreak = true,
                     TowStrap = true,
                     Lift = 5,
@@ -58,7 +58,7 @@ namespace Assessment_RaceTrack.Data
                     new Vehicle()
                 {
                     Id = Guid.NewGuid(),
-                    Description = "This is 5th vehicle on race track",
+                    Name = "This is 5th vehicle on race track",
                     HandBreak = true,
                     TowStrap = true,
                     Lift = 5,
@@ -84,8 +84,8 @@ namespace Assessment_RaceTrack.Data
                     OnTrack = (vehicleCount==5)?true:false
                 }) ;
             };
-           // base.Seed(context);
-            context.SaveChanges();
+            base.Seed(context);
+           // context.SaveChanges();
         }
     }
 }

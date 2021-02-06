@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Assessment_RaceTrack.Models.Vehicle>
+
+@{ ViewBag.Title = "Race Track";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int rowCount = 0; }
+
+<div>
+
+    <div>
+        <p class="warning alert-info alert">
+           Only 5 vehicle will allow on track 
+        </p>
+    </div>
+    <div class="text-right btn btn-default">
+        @Html.ActionLink("Add new vehicle on track", "Create", "Vehicle")
+    </div>
+</div>
+<table id="DataTable" style="width:100%;" class="table table-bordered">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Vehichle Name</th>
+            <th>Vehicle Image</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+  
+    <tbody>
+        @foreach (var item in Model)
+        {
+<tr>
+    <td>  @{rowCount++;}@rowCount </td>
+    <td>@item.Name</td>
+    <td>
+        <img src="/Content/images/@Url.Content(item.Image)" alt="Image" height="100px" width="100px" />
+    </td>
+
+
+    <td>
+        <a href="../RaceTrack/RemoveVehicleFromTrack/@item.Id.ToString()">Remove</a>
+    </td>
+</tr>}
+    </tbody>
+</table>
