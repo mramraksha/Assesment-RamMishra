@@ -137,7 +137,7 @@ namespace Assessment_RaceTrack.Tests
         {
             // Arrange
             Setup();
-            mockRepository.Setup(d => d.GetVehiclesOnTrack()).Returns(() => mockdata);
+            mockRepository.Setup(d => d.GetVehiclesOnTrack(It.IsAny<int>())).Returns(() => mockdata);
 
             //ACT
             var actualResult = trackService.GetVehiclesOnTrack();

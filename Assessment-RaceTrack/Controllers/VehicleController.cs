@@ -19,7 +19,6 @@ namespace Assessment_RaceTrack.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-
             return View();
         }
 
@@ -27,28 +26,35 @@ namespace Assessment_RaceTrack.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(VehicleDto vehicleDto)
         {
+            ModelState.AddModelError(nameof(vehicleDto.TireWear), "Error");
             if (ModelState.IsValid)
             {
-                //Process image file
-                var image = vehicleDto.ImageFile;
-                string fileName = string.Empty;
-                string folderPath = string.Empty;
-
-                if (image?.ContentLength > 0)
+                bool isValid=false;
+                if (isValid)
                 {
-                    //To Get File Extension  
-                    string fileExtension = Path.GetExtension(image.FileName);
+                    
 
-                    //Add Current Date To Attached File Name  
-                     fileName = DateTime.Now.ToString("yyyyMMdd")+ fileExtension;
-                     folderPath = Path.Combine(Server.MapPath("~/Content/images/"), fileName);
-                    image.SaveAs(folderPath);
-                    vehicleDto.Image = fileName;
+                   //Process image file
+                   var image = vehicleDto.ImageFile;
+
+                    if (image?.ContentLength > 0)
+                    {
+                        //To Get File Extension  
+                        string fileExtension = Path.GetExtension(image.FileName);
+
+                        //Add Current Date To Attached File Name  
+                        string fileName = DateTime.Now.ToString("yyyyMMdd") + fileExtension;
+                        string folderPath = Path.Combine(Server.MapPath("~/Content/images/"), fileName);
+                        image.SaveAs(folderPath);
+                        vehicleDto.Image = fileName;
+                    }
+                    //Save record in db
                     _trackService.AddVehiclesOnTrack(vehicleDto);
                 }
             }
-           
+
             return View();
         }
+       
     }
 }

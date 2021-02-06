@@ -1,75 +1,32 @@
 ﻿@model IEnumerable<Assessment_RaceTrack.Models.Vehicle>
+@{ ViewBag.Title = "Race Track";
+    
+    int rowCount = 0;
+     }
 
-
-
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.HandBreak)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TowStrap)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Lift)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Image)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TireWear)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsActive)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.OnTrack)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreatedDate)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+<table id="DataTable" style="width:100%;" class="table table-bordered">
+    <thead>
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HandBreak)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TowStrap)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Lift)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Image)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TireWear)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsActive)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OnTrack)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedDate)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>
+            <th>#</th>
+            <th>Vehicle Name</th>
+            <th>Vehicle Image</th>
+            <th>Action</th>
         </tr>
-    }
+    </thead>
 
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>  @{rowCount++;}@rowCount </td>
+                <td>@item.Name</td>
+                <td>
+                    <img src="/Content/images/@Url.Content(item.Image)" alt="Image" height="100px" width="100px" />
+                </td>
+                <td>
+                    <input type="button" class="btn" onclick="RemoveVehicle('@item.Id')" value="Remove" />
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>

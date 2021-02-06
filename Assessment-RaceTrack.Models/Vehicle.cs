@@ -23,9 +23,8 @@ namespace Assessment_RaceTrack.Models
         [Range(0, 5)]
         public int Lift { get; set; }
 
-        [Required]
         public string Image { get; set; }
-
+       
         public int? TireWear { get; set; }
 
         public bool IsActive { get; set; }

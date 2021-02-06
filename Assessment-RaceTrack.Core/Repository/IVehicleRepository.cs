@@ -7,7 +7,7 @@ namespace Assessment_RaceTrack.Core.Repository
     public interface IVehicleRepository : IRepository<Vehicle>
     {
         IUnitOfWork unitOfWork { get; }
-        IEnumerable<Vehicle> GetVehiclesOnTrack();
+        IEnumerable<Vehicle> GetVehiclesOnTrack(int count=0);
     }
 
 }

@@ -8,7 +8,7 @@ using System.Linq;
 namespace Assessment_RaceTrack.Services
 {
     public enum Response
-        {None, Inserted, Deleted, Overloaded}
+        {None, Inserted, Deleted, Overloaded, InspectionFail}
     public class TrackService : ITrackService
     {
         private readonly IVehicleRepository _vehicleRepository;
@@ -19,15 +19,22 @@ namespace Assessment_RaceTrack.Services
         }
         public IEnumerable<Vehicle> GetVehiclesOnTrack()
         {
-            return _vehicleRepository.GetVehiclesOnTrack();
+            int count = Convert.ToInt32(ConfigurationManager.AppSettings["TotalAllowedVehicleOnTrack"]);
+            return _vehicleRepository.GetVehiclesOnTrack(count);
         }
 
         public Response AddVehiclesOnTrack(VehicleDto vehicleDto)
         {
             try
             {
+                //Check for track overload
                 int totalAllowedVehicleOnTrack = Convert.ToInt32(ConfigurationManager.AppSettings["TotalAllowedVehicleOnTrack"]);
                 bool checkTrackOverload = _vehicleRepository.Get().Count()> totalAllowedVehicleOnTrack ? true:false;
+
+                //Vehicle inspection
+                if (VehicleInspection(vehicleDto))
+                    return Response.InspectionFail;
+
                 //Process for saving in database
                 var vehicleDetails = new Vehicle()
                 {
@@ -42,7 +49,7 @@ namespace Assessment_RaceTrack.Services
                     CreatedDate = DateTime.Now,
                     OnTrack = true
                 };
-                //in case of track overloaded
+                //In case of track overloaded
                 if (checkTrackOverload)
                     return Response.Overloaded;
                 var result = _vehicleRepository.Insert(vehicleDetails);
@@ -61,6 +68,19 @@ namespace Assessment_RaceTrack.Services
         {
             _vehicleRepository.Delete(vehicleId).ConfigureAwait(false);
           return  Response.Deleted;
+        }
+        private bool VehicleInspection(VehicleDto vehicleDto)
+        {
+            //TowStrap should be true for both truck and car
+            if (vehicleDto.TowStrap == true)
+            {
+                if (vehicleDto.Type == VehicleType.Car)
+                    return (vehicleDto.TireWear < 85);
+                if (vehicleDto.Type == VehicleType.Truck)
+                    return (vehicleDto.Lift <= 5);
+            }
+            return false;
+            
         }
     }
 }

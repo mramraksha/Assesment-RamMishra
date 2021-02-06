@@ -16,12 +16,12 @@ namespace Assessment_RaceTrack.Core.Repository
             unitOfWork = _unitOfWork;
         }
 
-        public  IEnumerable<Vehicle> GetVehiclesOnTrack()
+        public  IEnumerable<Vehicle> GetVehiclesOnTrack(int count=0)
         {
             List<Vehicle> vehiles = new List<Vehicle>();
             try
             {
-                return Get().Where(x => x.OnTrack);
+                return Get().Where(x => x.OnTrack).Take(count);
             }
             catch (Exception ex)
             {

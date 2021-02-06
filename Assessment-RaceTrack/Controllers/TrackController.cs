@@ -1,4 +1,5 @@
 ﻿using Assessment_RaceTrack.Services;
+using System;
 using System.Web.Mvc;
 
 namespace Assessment_RaceTrack.Controllers
@@ -10,17 +11,20 @@ namespace Assessment_RaceTrack.Controllers
         {
             _trackService = trackService;
         }
-
         // GET: Track
         public ActionResult Index()
         {
-            //~/Views/Shared/_Vehicles
-            return View();
+            return View(_trackService.GetVehiclesOnTrack());
         }
         public PartialViewResult GetVehicle()
         {
-            //~/Views/Shared/_Vehicles
             return PartialView("_Vehicles",_trackService.GetVehiclesOnTrack());
+        }
+        [HttpPost]
+        public ActionResult RemoveVehicleFromTrack(Guid vehicleId)
+        {
+            _trackService.RemoveVehiclesFromTrack(vehicleId);
+            return View("Index");
         }
     }
 }
