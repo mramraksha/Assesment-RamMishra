@@ -8,7 +8,7 @@ using System.Linq;
 namespace Assessment_RaceTrack.Services
 {
     public enum Response
-        {None, Inserted, Deleted, Overloaded, InspectionFail}
+    { None, Inserted, Deleted, Overloaded, InspectionFail }
     public class TrackService : ITrackService
     {
         private readonly IVehicleRepository _vehicleRepository;
@@ -29,10 +29,10 @@ namespace Assessment_RaceTrack.Services
             {
                 //Check for track overload
                 int totalAllowedVehicleOnTrack = Convert.ToInt32(ConfigurationManager.AppSettings["TotalAllowedVehicleOnTrack"]);
-                bool checkTrackOverload = _vehicleRepository.Get().Count()> totalAllowedVehicleOnTrack ? true:false;
+                bool checkTrackOverload = _vehicleRepository.Get().Count() > totalAllowedVehicleOnTrack ? true : false;
 
                 //Vehicle inspection
-                if (VehicleInspection(vehicleDto))
+                if (!VehicleInspection(vehicleDto))
                     return Response.InspectionFail;
 
                 //Process for saving in database
@@ -60,16 +60,25 @@ namespace Assessment_RaceTrack.Services
 
                 throw ex;
             }
-           
+
 
         }
 
         public Response RemoveVehiclesFromTrack(Guid vehicleId)
         {
-            _vehicleRepository.Delete(vehicleId).ConfigureAwait(false);
-          return  Response.Deleted;
+            try
+            {
+                _vehicleRepository.Delete(vehicleId);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+            return Response.Deleted;
         }
-        private bool VehicleInspection(VehicleDto vehicleDto)
+        public bool VehicleInspection(VehicleDto vehicleDto)
         {
             //TowStrap should be true for both truck and car
             if (vehicleDto.TowStrap == true)
@@ -80,7 +89,7 @@ namespace Assessment_RaceTrack.Services
                     return (vehicleDto.Lift <= 5);
             }
             return false;
-            
+
         }
     }
 }

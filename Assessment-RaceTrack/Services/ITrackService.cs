@@ -11,5 +11,6 @@ namespace Assessment_RaceTrack.Services
         IEnumerable<Vehicle> GetVehiclesOnTrack();
         Response AddVehiclesOnTrack(VehicleDto vehicle);
         Response RemoveVehiclesFromTrack(Guid vehicleId);
+        bool VehicleInspection(VehicleDto vehicleDto);
     }
 }

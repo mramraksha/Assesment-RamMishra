@@ -2,7 +2,6 @@
 
 @{ ViewBag.Title = "Race Track";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    int rowCount = 0;
     int totalAllowedVehicle = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["TotalAllowedVehicleOnTrack"]);
     bool activeAdd = Model?.Count() < totalAllowedVehicle; }
 
@@ -12,7 +11,7 @@
 
 <div>
 
-    <div id="div1">
+    <div>
         <p class="warning alert-info alert">
             Only @totalAllowedVehicle vehicle will allow on track
         </p>
@@ -38,14 +37,16 @@
 
     });
     function RemoveVehicle(vehicleId) {
-        if (confirm('Are you sure want to delete')) {
+        if (confirm('Are you sure want to delete?')) {
             $.ajax({
                 type: "Post",
-                url: "/Track/RemoveVehicleFromTrack?vehicleId=" + vehicleId,
-                success: function (result) {
-                    LoadList();
+                dataType: 'JSON',
+                url: "/Track/RemoveVehicleFromTrack",
+                data: { "vehicleId": vehicleId},
+                success: function () {
                 }
             });
+            location.reload();
         }
     }
     function LoadList() {

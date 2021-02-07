@@ -23,11 +23,9 @@ namespace Assessment_RaceTrack.Tests
         #region GLOBAL DECLRATION
 
         private ITrackService trackService;
-        private IList<Vehicle> mockdata;
-        private Mock<IRaceTrackContext> mockContext;
+        private IList<VehicleDto> mockdata;
         private Mock<IVehicleRepository> mockRepository;
-        private Mock<IUnitOfWork> mockUnitOfWork;
-        private VehicleDto mockVehicleDto;
+       
         Guid mockedVehicleId;
 
         #endregion
@@ -36,11 +34,13 @@ namespace Assessment_RaceTrack.Tests
 
         private void Setup()
         {
+            Mock<IRaceTrackContext> mockContext;
             mockedVehicleId = Guid.NewGuid();
-            mockdata = new List<Vehicle>()
+            Mock<IUnitOfWork> mockUnitOfWork;
+            mockdata = new List<VehicleDto>()
             {
-                //Prepaire vehicle data for migration
-                new Vehicle()
+                //Prepaire vehicle data for mock
+                new VehicleDto()
                 {
                     Id = mockedVehicleId,
                     Name = "This is 1St vehicle on race track",
@@ -52,7 +52,7 @@ namespace Assessment_RaceTrack.Tests
                     CreatedDate=DateTime.Now,
                     OnTrack=true
                 },
-                 new Vehicle ()
+                 new VehicleDto ()
                 {
                     Id = Guid.NewGuid(),
                     Name = "This is 2nd vehicle on race track",
@@ -66,14 +66,9 @@ namespace Assessment_RaceTrack.Tests
                 },
             };
 
-            var dbSetGenres = GetMockDbSet<Vehicle>(mockdata);
             mockContext = new Mock<IRaceTrackContext>();
-
             mockUnitOfWork = new Mock<IUnitOfWork>();
             mockRepository = new Mock<IVehicleRepository>();
-
-            //mockRepository.Setup(d => d.Get(null, null, null)).Returns(() => mockdata);
-
             trackService = new TrackService(mockRepository.Object);
         }
 
@@ -99,23 +94,12 @@ namespace Assessment_RaceTrack.Tests
             Setup();
             mockRepository.Setup(d => d.Insert(It.IsAny<Vehicle>())).Returns(() => mockdata[0]);
 
-            mockVehicleDto = new VehicleDto()
-            {
-                Id = Guid.NewGuid(),
-                Name = "This is 1St vehicle on race track",
-                HandBreak = true,
-                TowStrap = true,
-                Lift = 5,
-                Image = "v1.PNG",
-                IsActive = true,
-                CreatedDate = DateTime.Now,
-                OnTrack = true
-            };
+            var mockVehicleDto = mockdata[0];
 
-            //ACT
-            var actualResult = trackService.AddVehiclesOnTrack(mockVehicleDto);
+            //Act
+            var actualResult = trackService.AddVehiclesOnTrack(mockdata[0]);
 
-            //ASSERT
+            //Assert
             Assert.AreEqual(Response.Inserted, actualResult);
         }
 
@@ -125,10 +109,10 @@ namespace Assessment_RaceTrack.Tests
             // Arrange
             Setup();
 
-            //ACT
+            //Act
             var actualResult = trackService.RemoveVehiclesFromTrack(mockedVehicleId);
 
-            //ASSERT
+            //Assert
             Assert.AreEqual(Response.Deleted, actualResult);
         }
 
@@ -139,10 +123,10 @@ namespace Assessment_RaceTrack.Tests
             Setup();
             mockRepository.Setup(d => d.GetVehiclesOnTrack(It.IsAny<int>())).Returns(() => mockdata);
 
-            //ACT
+            //Act
             var actualResult = trackService.GetVehiclesOnTrack();
 
-            //ASSERT
+            //Assert
             Assert.IsTrue(actualResult.Count() > 0);
         }
     }

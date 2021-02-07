@@ -11,7 +11,7 @@ namespace Assessment_RaceTrack.Core.Repository.Common
     public interface IRepository<T> where T:class
     {
         Task Delete(T entityToDelete);
-        Task Delete(object id);
+       void  Delete(object id);
        IEnumerable<T> Get(Expression<Func<T, bool>> filter = null,
              Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
              string includeProperties = "");

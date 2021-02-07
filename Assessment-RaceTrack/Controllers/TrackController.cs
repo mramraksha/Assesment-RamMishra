@@ -1,9 +1,11 @@
 ﻿using Assessment_RaceTrack.Services;
+
 using System;
 using System.Web.Mvc;
 
 namespace Assessment_RaceTrack.Controllers
 {
+  
     public class TrackController : Controller
     {
         private readonly ITrackService _trackService;
@@ -24,7 +26,7 @@ namespace Assessment_RaceTrack.Controllers
         public ActionResult RemoveVehicleFromTrack(Guid vehicleId)
         {
             _trackService.RemoveVehiclesFromTrack(vehicleId);
-            return View("Index");
+            return RedirectToAction("Index", "Track");
         }
     }
 }

@@ -9,5 +9,6 @@ namespace Assessment_RaceTrack.Models
     public class VehicleDto:Vehicle
     {
         public HttpPostedFileBase ImageFile { get; set; }
+        public string ResponseMessage { get; set; }
     }
 }

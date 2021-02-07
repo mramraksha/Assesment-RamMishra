@@ -21,7 +21,7 @@
                 <td>  @{rowCount++;}@rowCount </td>
                 <td>@item.Name</td>
                 <td>
-                    <img src="/Content/images/@Url.Content(item.Image)" alt="Image" height="100px" width="100px" />
+                    <img src="/Content/images/@Url.Content(item.Image==null?"v1.PNG":item.Image)" alt="Image" height="100px" width="100px" />
                 </td>
                 <td>
                     <input type="button" class="btn" onclick="RemoveVehicle('@item.Id')" value="Remove" />

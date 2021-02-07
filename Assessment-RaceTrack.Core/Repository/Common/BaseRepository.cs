@@ -63,10 +63,10 @@ namespace  Assessment_RaceTrack.Core.Repository.Common
             return res;
         }
 
-        public virtual async Task Delete(object id)
+        public virtual void  Delete(object id)
         {
-            T entityToDelete = await dbSet.FindAsync(id);
-            await Delete(entityToDelete);
+            T entityToDelete =  dbSet.Find(id);
+             Delete(entityToDelete).ConfigureAwait(false);
             this.context.SaveChanges();
         }
 

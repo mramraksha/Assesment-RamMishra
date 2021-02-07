@@ -6,6 +6,33 @@
 
 <h2>Add new vehicle on track</h2>
 
+<div>
+    <div class="bg-info" >
+        <h4>Validation Rules for vehicle inspection</h4>
+
+        <div>
+            <b>Truck Inspections</b>
+            <p>
+                1. Tow strap on the vehicle
+            </p>
+
+           <p> 2. Not lifted more than 5 inches</p>
+
+        </div>
+        
+        <div>
+            <b>Car Inspections</b>
+            <p>1. Tow strap on the vehicle</p>
+            <p>2. Less than 85% tire wear</p>
+        </div>
+    </div>
+    @if(!string.IsNullOrEmpty(ViewBag.Success))
+    {
+    <p class="warning alert-success alert">
+        @ViewBag.Success
+    </p>
+    }
+</div>
 @using (Html.BeginForm("Create", "Vehicle", FormMethod.Post, new
 {
     enctype = "multipart/form-data"
@@ -15,18 +42,18 @@
 
 <div class="form-horizontal">
 
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control"} })
+    @Html.ValidationMessageFor(model => model.ResponseMessage, "", new { @class = "text-danger" })
+    <div class="form-group col-md-12">
+        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-3" })
+        <div class="col-md-8">
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control " } })
             @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
         </div>
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+    <div class="form-group col-md-12">
+        @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label col-md-3" })
+        <div class="col-md-8">
             @Html.DropDownListFor(m => m.Type,
 new SelectList(Enum.GetValues(typeof(Assessment_RaceTrack.Models.VehicleType))),
  new { @class = "form-control" })
@@ -34,47 +61,47 @@ new SelectList(Enum.GetValues(typeof(Assessment_RaceTrack.Models.VehicleType))),
             @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
         </div>
     </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.HandBreak, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+    <div class="form-group col-md-12">
+        @Html.LabelFor(model => model.HandBreak, htmlAttributes: new { @class = "control-label col-md-3" })
+        <div class="col-md-8">
             @Html.CheckBoxFor(m => m.HandBreak, new { htmlAttributes = new { @class = "form-control" } })
 
             @Html.ValidationMessageFor(model => model.HandBreak, "", new { @class = "text-danger" })
         </div>
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.TowStrap, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+    <div class="form-group col-md-12">
+        @Html.LabelFor(model => model.TowStrap, htmlAttributes: new { @class = "control-label col-md-3" })
+        <div class="col-md-8">
             @Html.CheckBoxFor(m => m.TowStrap, new { htmlAttributes = new { @class = "form-control" } })
 
             @Html.ValidationMessageFor(model => model.TowStrap, "", new { @class = "text-danger" })
         </div>
     </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.Lift, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Lift, null, new { type = "number",@required = "required" })
+    <div class="form-group col-md-12">
+        @Html.LabelFor(model => model.Lift, htmlAttributes: new { @class = "control-label col-md-3" })
+        <div class="col-md-8">
+            @Html.TextBoxFor(m => m.Lift, null, new { type = "number", @required = "required" })
             @Html.ValidationMessageFor(model => model.Lift, "", new { @class = "text-danger" })
         </div>
     </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.TireWear, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+    <div class="form-group col-md-12">
+        @Html.LabelFor(model => model.TireWear, htmlAttributes: new { @class = "control-label col-md-3 " })
+        <div class="col-md-8">
             @Html.TextBoxFor(m => m.TireWear, null, new { type = "number", @required = "required" })
             @Html.ValidationMessageFor(model => model.TireWear, "", new { @class = "text-danger" })
         </div>
     </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <input type="file" name="ImageFile"  />
+    <div class="form-group col-md-12">
+        @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-3" })
+        <div class="col-md-8">
+            <input type="file" name="ImageFile" />
 
         </div>
     </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
+    <div class="form-group col-md-12">
+        <div class="col-md-offset-2 col-md-8">
+            <input type="submit" value="Create" class="btn btn-success " />
         </div>
     </div>
 </div>}
