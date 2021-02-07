@@ -12,10 +12,11 @@ namespace Assessment_RaceTrack.Services
     public class TrackService : ITrackService
     {
         private readonly IVehicleRepository _vehicleRepository;
-        private readonly int totalAllowedVehicleOnTrack = Convert.ToInt32(ConfigurationManager.AppSettings["TotalAllowedVehicleOnTrack"]);
+        private readonly int totalAllowedVehicleOnTrack = 0;
         public TrackService(IVehicleRepository vehicleRepository)
         {
             _vehicleRepository = vehicleRepository;
+            totalAllowedVehicleOnTrack = vehicleRepository.totalAllowedVehicleOnTrack==0? Convert.ToInt32(ConfigurationManager.AppSettings["TotalAllowedVehicleOnTrack"]): vehicleRepository.totalAllowedVehicleOnTrack;
         }
         public IEnumerable<Vehicle> GetVehiclesOnTrack()
         {
@@ -27,7 +28,7 @@ namespace Assessment_RaceTrack.Services
             try
             {
                 //Check for track overload
-                bool checkTrackOverload = GetVehiclesOnTrack().Count() >= totalAllowedVehicleOnTrack ? true : false;
+                bool checkTrackOverload = _vehicleRepository.Get().Count() >= totalAllowedVehicleOnTrack ? true : false;
 
                 //Vehicle inspection
                 if (!VehicleInspection(vehicleDto))

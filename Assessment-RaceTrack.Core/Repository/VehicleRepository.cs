@@ -10,6 +10,7 @@ namespace Assessment_RaceTrack.Core.Repository
     public class VehicleRepository : BaseRepository<Vehicle>, IVehicleRepository
     {
         public IUnitOfWork unitOfWork { get; }
+        public int totalAllowedVehicleOnTrack { get ; set ; }
 
         public VehicleRepository(IUnitOfWork _unitOfWork) : base(_unitOfWork)
         {

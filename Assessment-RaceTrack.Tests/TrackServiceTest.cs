@@ -65,6 +65,7 @@ namespace Assessment_RaceTrack.Tests
             //Mock repository
             mockRepository = new Mock<IVehicleRepository>();
             mockRepository.Setup(x => x.GetVehiclesOnTrack(5)).Returns(() => mockdata);
+            mockRepository.Setup(x => x.totalAllowedVehicleOnTrack).Returns(() => 5);
             trackService = new TrackService(mockRepository.Object);
         }
         #endregion
@@ -76,7 +77,7 @@ namespace Assessment_RaceTrack.Tests
             // Arrange
             Setup();
             mockRepository.Setup(d => d.Insert(It.IsAny<Vehicle>())).Returns(() => mockdata[0]);
-
+          
             var mockVehicleDto = mockdata[0];
 
             //Act
