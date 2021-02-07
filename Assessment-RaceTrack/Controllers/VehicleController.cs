@@ -34,7 +34,7 @@ namespace Assessment_RaceTrack.Controllers
 
             if (ModelState.IsValid)
             {
-               
+
                 //Process image file
                 var image = vehicleDto.ImageFile;
 
@@ -50,8 +50,11 @@ namespace Assessment_RaceTrack.Controllers
                     vehicleDto.Image = fileName;
                 }
                 //Save record in db
-                _trackService.AddVehiclesOnTrack(vehicleDto);
-                ViewBag.Success = "Vehicle Added on track.";
+                Response response = _trackService.AddVehiclesOnTrack(vehicleDto);
+                if (response == Services.Response.Inserted)
+                    ViewBag.Success = "Vehicle Added on track.";
+                else
+                    ModelState.AddModelError(nameof(vehicleDto.ResponseMessage), "Race track is already overloaded.");
             }
 
             return View();

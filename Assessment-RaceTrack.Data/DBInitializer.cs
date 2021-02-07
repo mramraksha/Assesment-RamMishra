@@ -15,6 +15,7 @@ namespace Assessment_RaceTrack.Data
                 {
                     Id = Guid.NewGuid(),
                     Name = "This is 1St vehicle on race track",
+                    Type=VehicleType.Car,
                     HandBreak = true,
                     TowStrap = true,
                     Lift = 5,
@@ -28,6 +29,7 @@ namespace Assessment_RaceTrack.Data
                     Id = Guid.NewGuid(),
                     Name = "This is 2nd vehicle on race track",
                     HandBreak = true,
+                      Type=VehicleType.Car,
                     TowStrap = true,
                     Lift = 5,
                     Image= "v1.PNG",
@@ -39,6 +41,7 @@ namespace Assessment_RaceTrack.Data
                 {
                     Id = Guid.NewGuid(),
                     Name = "This is 3rd vehicle on race track",
+                      Type=VehicleType.Car,
                     HandBreak = true,
                     TowStrap = true,
                     Lift = 5,
@@ -51,6 +54,7 @@ namespace Assessment_RaceTrack.Data
                 {
                     Id = Guid.NewGuid(),
                     Name = "This is 4th vehicle on race track",
+                      Type=VehicleType.Car,
                     HandBreak = true,
                     TowStrap = true,
                     Lift = 5,
@@ -63,6 +67,7 @@ namespace Assessment_RaceTrack.Data
                 {
                     Id = Guid.NewGuid(),
                     Name = "This is 5th vehicle on race track",
+                      Type=VehicleType.Car,
                     HandBreak = true,
                     TowStrap = true,
                     Lift = 5,
@@ -73,9 +78,9 @@ namespace Assessment_RaceTrack.Data
                 },
             };
             vehicles.ForEach(vehicle => context.Vehicles.Add(vehicle));
-           
+
             base.Seed(context);
-           // context.SaveChanges();
+            // context.SaveChanges();
         }
     }
 }
