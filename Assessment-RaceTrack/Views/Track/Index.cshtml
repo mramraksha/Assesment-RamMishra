@@ -3,7 +3,7 @@
 @{ ViewBag.Title = "Race Track";
     Layout = "~/Views/Shared/_Layout.cshtml";
     int totalAllowedVehicle = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["TotalAllowedVehicleOnTrack"]);
-    bool activeAdd = Model.Count() < totalAllowedVehicle; }
+    bool activeAdd = Model?.Count() < totalAllowedVehicle; }
 
 <script src="~/Scripts/jquery-3.4.1.js"></script>
 <div>
