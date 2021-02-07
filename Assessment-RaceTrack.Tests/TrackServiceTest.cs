@@ -106,7 +106,7 @@ namespace Assessment_RaceTrack.Tests
             Assert.AreEqual(Response.InspectionFail, actualResult);
         }
         [TestMethod]
-        public void ShouldNot_Add_Truck_OnTrackWhenLiftMoreThanIinches()
+        public void ShouldNot_Add_Truck_OnTrackWhenLiftMoreThanExpectedInches()
         {
             // Arrange
             Setup();

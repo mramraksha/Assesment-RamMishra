@@ -3,11 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Assessment_RaceTrack.Models
 {
-    public enum VehicleType
-    {
-        Truck, Car
-    }
-
+   
     public class Vehicle
     {
         public Guid Id { get; set; }

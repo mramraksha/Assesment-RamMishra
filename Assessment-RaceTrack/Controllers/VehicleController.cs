@@ -29,7 +29,7 @@ namespace Assessment_RaceTrack.Controllers
             //Vehicle Inspection
             if (!_trackService.VehicleInspection(vehicleDto))
             {
-                ModelState.AddModelError(nameof(vehicleDto.ResponseMessage), "Vehilce Insepection Fail");
+                ModelState.AddModelError(nameof(vehicleDto.ResponseMessage), "Vehilce inspection  failed.");
             }
 
             if (ModelState.IsValid)
