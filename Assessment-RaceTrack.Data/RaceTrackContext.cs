@@ -4,7 +4,7 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace Assessment_RaceTrack.Data
 {
-    public class RaceTrackContext : DbContext, IRaceTrackContext
+    public class RaceTrackContext : DbContext
     {
         public RaceTrackContext() : base("RaceTrackConString")
         { }

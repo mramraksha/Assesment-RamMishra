@@ -20,30 +20,27 @@ namespace Assessment_RaceTrack.Tests
     [TestClass]
     public class TrackServiceTest
     {
-        #region GLOBAL DECLRATION
+        #region Global Declaration
 
         private ITrackService trackService;
         private IList<VehicleDto> mockdata;
         private Mock<IVehicleRepository> mockRepository;
-       
         Guid mockedVehicleId;
 
         #endregion
 
-        #region TEST SETUP
+        #region Test Setup
 
         private void Setup()
         {
-            Mock<IRaceTrackContext> mockContext;
             mockedVehicleId = Guid.NewGuid();
-            Mock<IUnitOfWork> mockUnitOfWork;
             mockdata = new List<VehicleDto>()
             {
                 //Prepaire vehicle data for mock
                 new VehicleDto()
                 {
                     Id = mockedVehicleId,
-                    Name = "This is 1St vehicle on race track",
+                    Name = "V1",
                     HandBreak = true,
                     TowStrap = true,
                     Lift = 5,
@@ -55,7 +52,7 @@ namespace Assessment_RaceTrack.Tests
                  new VehicleDto ()
                 {
                     Id = Guid.NewGuid(),
-                    Name = "This is 2nd vehicle on race track",
+                    Name = "V2",
                     HandBreak = true,
                     TowStrap = true,
                     Lift = 5,
@@ -65,28 +62,14 @@ namespace Assessment_RaceTrack.Tests
                      OnTrack=true
                 },
             };
-
-            mockContext = new Mock<IRaceTrackContext>();
-            mockUnitOfWork = new Mock<IUnitOfWork>();
+            //Mock repository
             mockRepository = new Mock<IVehicleRepository>();
+            mockRepository.Setup(x => x.GetVehiclesOnTrack(5)).Returns(() => mockdata);
             trackService = new TrackService(mockRepository.Object);
         }
-
-        private IDbSet<T> GetMockDbSet<T>(IList<T> data) where T : class
-        {
-            var queryable = data.AsQueryable();
-            var mockSet = new Mock<IDbSet<T>>();
-            mockSet.As<IQueryable<T>>().Setup(m => m.Provider).Returns(queryable.Provider);
-            mockSet.As<IQueryable<T>>().Setup(m => m.Expression).Returns(queryable.Expression);
-            mockSet.As<IQueryable<T>>().Setup(m => m.ElementType).Returns(queryable.ElementType);
-            mockSet.As<IQueryable<T>>().Setup(m => m.GetEnumerator()).Returns(queryable.GetEnumerator());
-            mockSet.Setup(d => d.Add(It.IsAny<T>())).Callback<T>((s) => data.Add(s));
-
-            return mockSet.Object;
-        }
-
         #endregion
 
+        #region Add vehicles on track test cases
         [TestMethod]
         public void Should_Add_Vehicle_OnTrack()
         {
@@ -97,11 +80,67 @@ namespace Assessment_RaceTrack.Tests
             var mockVehicleDto = mockdata[0];
 
             //Act
-            var actualResult = trackService.AddVehiclesOnTrack(mockdata[0]);
+            var actualResult = trackService.AddVehiclesOnTrack(mockVehicleDto);
 
             //Assert
             Assert.AreEqual(Response.Inserted, actualResult);
         }
+       
+        #endregion
+
+        #region Vehicle inspection test cases
+        [TestMethod]
+        public void ShouldNot_Add_Vehicle_OnTrackWhenTowsStrapIsFasle()
+        {
+            // Arrange
+            Setup();
+            mockRepository.Setup(d => d.Insert(It.IsAny<Vehicle>())).Returns(() => mockdata[0]);
+
+            var mockVehicleDto = mockdata[0];
+            mockVehicleDto.TowStrap = false;
+
+            //Act
+            var actualResult = trackService.AddVehiclesOnTrack(mockVehicleDto);
+
+            //Assert
+            Assert.AreEqual(Response.InspectionFail, actualResult);
+        }
+        [TestMethod]
+        public void ShouldNot_Add_Truck_OnTrackWhenLiftMoreThanIinches()
+        {
+            // Arrange
+            Setup();
+            mockRepository.Setup(d => d.Insert(It.IsAny<Vehicle>())).Returns(() => mockdata[0]);
+
+            var mockVehicleDto = mockdata[0];
+            mockVehicleDto.Type = VehicleType.Truck;
+            mockVehicleDto.Lift = 6;
+
+            //Act
+            var actualResult = trackService.AddVehiclesOnTrack(mockVehicleDto);
+
+            //Assert
+            Assert.AreEqual(Response.InspectionFail, actualResult);
+        }
+        [TestMethod]
+        public void ShouldNot_Add_Car_OnTrackWhenTireWearMoreThanExpectedPercentages()
+        {
+            // Arrange
+            Setup();
+            mockRepository.Setup(d => d.Insert(It.IsAny<Vehicle>())).Returns(() => mockdata[0]);
+
+            var mockVehicleDto = mockdata[0];
+            mockVehicleDto.Type = VehicleType.Car;
+            mockVehicleDto.TireWear = 86;
+
+            //Act
+            var actualResult = trackService.AddVehiclesOnTrack(mockVehicleDto);
+
+            //Assert
+            Assert.AreEqual(Response.InspectionFail, actualResult);
+        }
+
+        #endregion
 
         [TestMethod]
         public void Should_Remove_Vehicle_FromTrack()
